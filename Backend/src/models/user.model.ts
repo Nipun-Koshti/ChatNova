@@ -8,7 +8,9 @@ export interface UserDocument extends Document{
     avatar?: string | null;
     createdAt: Date;
     updatedAt: Date;
-
+    // comparePassword checks a plain text value against the stored hashed password
+    // returns a Promise that resolves to true when they match
+    comparePassword: (value: string) => Promise<boolean>;
 }
 
 const userSchema = new Schema<UserDocument>({
@@ -48,7 +50,8 @@ userSchema.pre("save",async function(next){
     if(this.password && this.isModified("password")){
         this.password = await hashValue(this.password)
     }
-})
+    next();
+});
 
 userSchema.methods.comparePassword = async function(value: string){
     return compareValue(value, this.password);
