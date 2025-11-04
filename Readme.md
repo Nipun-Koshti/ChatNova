@@ -1,0 +1,1 @@
+i hvave used react for the frontend of the project and shacdcn ui and tailwind
