@@ -15,11 +15,11 @@ export const useSocket = create<SocketState>()((set,get)=>({
     onlineUser:[],
     connectSocket:()=>{
         const {socket}=get()
-        if(socket?.connected)return;
+        if(socket)return;
 
         const newSocket = io(BASE_URL,{
             withCredentials:true,
-
+            autoConnect:true
         })
 
         set({socket:newSocket})
@@ -28,7 +28,7 @@ export const useSocket = create<SocketState>()((set,get)=>({
             console.log("Socket connected",newSocket.id)
         })
 
-        newSocket.on("online: users",(userIds)=>{
+        newSocket.on("online:users",(userIds)=>{
             console.log("online user", userIds)
             set({onlineUser:userIds})
         })
