@@ -16,8 +16,9 @@ export const initializeSocket = (httpServer: HTTPServer) => {
   io = new Server(httpServer, {
     cors: {
       origin: Env.FRONTEND_ORIGIN,
-      methods: ["GET", "POST"],
-      credentials: true,
+    credentials: true,
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     },
   });
 
